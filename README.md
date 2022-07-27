@@ -1,3 +1,6 @@
+![CleanShot 2022-07-28 at 03 53 23@2x](https://user-images.githubusercontent.com/1888355/181350899-026ea91f-c3c7-4438-9805-c92a3c55198d.png)
+
+
 Below are the steps to get your widget running. You can also find instructions at:
 
 https://www.figma.com/widget-docs/setup-guide/
