@@ -20,24 +20,23 @@ function Widget() {
   const [results, setResults] = useSyncedState("results", [] as Result[]);
 
   const run = () => {
-    const result = figma.currentPage.findChildren((node) => {
-      switch (node.type) {
-        case "TEXT":
-          const textNode = node as TextNode;
+    // https://www.figma.com/plugin-docs/accessing-document#optimizing-traversals
 
-          const text = textNode.characters;
+    figma.skipInvisibleInstanceChildren = true;
 
-          if (text.startsWith("Key:") === false) {
-            return false;
-          }
+    const result = figma.currentPage
+      .findAllWithCriteria({ types: ["TEXT"] })
+      .filter((textNode) => {
+        const text = textNode.characters;
 
-          console.log(textNode.characters);
-
-          return true;
-        default:
+        if (text.startsWith("Key:") === false) {
           return false;
-      }
-    });
+        }
+
+        console.log(textNode.characters);
+
+        return true;
+      });
 
     const textNodes = result
       .map((e) => {
