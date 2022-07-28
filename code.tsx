@@ -20,10 +20,16 @@ function Widget() {
   const [results, setResults] = useSyncedState("results", [] as Result[]);
 
   const run = () => {
-    const result = figma.currentPage.findAll((node) => {
+    const result = figma.currentPage.findChildren((node) => {
       switch (node.type) {
         case "TEXT":
           const textNode = node as TextNode;
+
+          const text = textNode.characters;
+
+          if (text.startsWith("Key:") === false) {
+            return false;
+          }
 
           console.log(textNode.characters);
 
