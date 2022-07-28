@@ -1,15 +1,8 @@
 // This is a counter widget with buttons to increment and decrement the number.
 
 const { widget } = figma;
-const {
-  useSyncedState,
-  usePropertyMenu,
-  AutoLayout,
-  Text,
-  SVG,
-  Rectangle,
-  Frame,
-} = widget;
+const { useSyncedState, usePropertyMenu, AutoLayout, Text, SVG, Input, Frame } =
+  widget;
 
 type Result = {
   text: string;
@@ -44,7 +37,7 @@ function Widget() {
       })
       .map((e) => {
         return {
-          text: e.characters,
+          text: e.characters.replace(/^(Key:)/, "").replace(" ", ""),
           textNode: e,
         } as Result;
       });
@@ -79,14 +72,24 @@ function Widget() {
             fill={"#FFFFFF"}
             stroke={"#E6E6E6"}
           >
+            <Input
+              key={result.textNode.id}
+              value={result.text}
+              onTextEditEnd={() => {}}
+            />
+
             <Text
-              fill="#000000"
+              fill="#5f9fd9"
               key={result.textNode.id}
               onClick={() => {
                 figma.currentPage.selection = [result.textNode];
+
+                // https://www.figma.com/plugin-docs/api/figma-viewport/#scrollandzoomintoview
+
+                figma.viewport.scrollAndZoomIntoView([result.textNode]);
               }}
             >
-              {result.text}
+              jump
             </Text>
 
             {/* <Text
